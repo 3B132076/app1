@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Order;
+use App\Models\Product;
 use App\Http\Requests\StoreOrderRequest;
 use App\Http\Requests\UpdateOrderRequest;
 
@@ -13,7 +14,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        //
+        $orders = auth()->user()->orders;
+        $data = [
+            'orders'=>$orders,
+        ];
+        $orders = Order::with('products')->get();
+        return view('orders.index', $data);
     }
 
     /**
