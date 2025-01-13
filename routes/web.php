@@ -52,4 +52,5 @@ Route::middleware('auth')->group(function () {
 });
 Route::resource('cart_items', CartItemController::class);
 Route::resource('orders', OrderController::class);
+Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
 require __DIR__.'/auth.php';

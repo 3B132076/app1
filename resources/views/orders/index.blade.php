@@ -7,7 +7,7 @@
         <ul>
             @foreach ($order->products as $product)
                 <li>
-                    商品名稱: {{ $product->name }} 
+                    商品名稱: {{ $product->name }}
                 </li>
             @endforeach
         </ul>
