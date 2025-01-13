@@ -17,7 +17,10 @@ use App\Http\Controllers\ProductController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::resource('products', ProductController::class);
+Route::resource('products', ProductController::class)->only([
+    'index', 'show', 'store', 'update', 'destroy'
+]);
+
 /*
 products.index:     GET|HEAD    /products                   ProductController@index    顯示所有產品的列表（顯示產品的總覽頁面）
 products.show:      GET|HEAD    /products/{product}         ProductController@show     顯示指定產品的詳細資訊
