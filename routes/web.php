@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProfileController;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ Route::get('/', function () {
 //Route::resource('products', ProductController::class)->only([
 //    'index', 'show', 'store', 'update', 'destroy'
 //]);
+
 Route::get('products', [ProductController::class, 'index'])->name('products.index');
 Route::get('products/{product}', [ProductController::class, 'show'])->name('products.show');
 Route::get('products/create', [ProductController::class, 'create'])->name("products.create");
@@ -27,6 +29,7 @@ Route::post('products', [ProductController::class, 'store'])->name("products.sto
 Route::get('products/{products}/edit', [ProductController::class, 'edit'])->name("products.edit");
 Route::patch('products/{product}', [ProductController::class, 'update'])->name("products.update");
 Route::delete('products/{product}', [ProductController::class, 'destroy'])->name("products.destroy");
+
 /*
 products.index:     GET|HEAD    /products                   ProductController@index    顯示所有產品的列表（顯示產品的總覽頁面）
 products.show:      GET|HEAD    /products/{product}         ProductController@show     顯示指定產品的詳細資訊
@@ -36,3 +39,15 @@ products.edit:      GET|HEAD    /products/{product}/edit    ProductController@ed
 products.update:    PUT|PATCH   /products/{product}         ProductController@update   更新指定產品的資料
 products.destroy:   DELETE      /products/{product}         ProductController@destroy  刪除指定的產品（從資料庫移除該產品）
 */
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+require __DIR__.'/auth.php';
